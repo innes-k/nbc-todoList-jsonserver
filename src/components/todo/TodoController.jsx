@@ -1,16 +1,10 @@
 import { useState } from "react";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
-
-const todoObj = {
-  id: 1,
-  title: "Learn React",
-  content: "Learn React today",
-  isDone: false,
-};
+import todosDb from "../../../db.json";
 
 const TodoController = () => {
-  const [todos, setTodos] = useState([todoObj]);
+  const [todos, setTodos] = useState(todosDb.todos);
 
   const onSubmitTodo = (nextTodo) => {
     setTodos((prevTodos) => [nextTodo, ...prevTodos]);
