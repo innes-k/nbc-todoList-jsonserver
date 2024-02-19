@@ -1,20 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
-import todosDb from "../../../db.json";
+import {
+  createTodo,
+  deleteTodo,
+  getTodos,
+  updateTodo,
+} from "../../apis/todo-apis";
+// import todosDb from "../../../db.json";
 
 const TodoController = () => {
-  const [todos, setTodos] = useState(todosDb.todos);
+  const [todos, setTodos] = useState([]);
 
-  const onSubmitTodo = (nextTodo) => {
+  useEffect(() => {
+    const fetchTodos = async () => {
+      const data = await getTodos();
+      setTodos(data);
+    };
+    fetchTodos();
+  }, []);
+
+  const onSubmitTodo = async (nextTodo) => {
+    await createTodo(nextTodo);
     setTodos((prevTodos) => [nextTodo, ...prevTodos]);
   };
 
-  const onDeleteTodoItem = (id) => {
+  const onDeleteTodoItem = async (id) => {
+    await deleteTodo(id);
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
-  const onToggleTodoItem = (id) => {
+  const onToggleTodoItem = async (id) => {
+    await updateTodo(id, {
+      isDone: !todos.find((todoItem) => todoItem.id === id).isDone,
+    });
     setTodos((prevTodos) =>
       prevTodos.map((todoItem) => {
         if (todoItem.id === id) {
