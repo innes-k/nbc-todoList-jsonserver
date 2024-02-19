@@ -1,0 +1,21 @@
+body {
+  all: unset;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  margin: 1rem;
+}
+
+.todo-card-item {
+  padding: 1rem;
+  border: 1px solid black;
+}
